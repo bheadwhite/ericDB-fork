@@ -12,7 +12,7 @@ class App extends Component{
     }
   }
 
-  componentDidMount = () => {
+  componentDidMount() {
     axios.get('/api/task').then((res) => {
       this.setState({
         currentTask: res.data
@@ -20,7 +20,7 @@ class App extends Component{
     })
   }
 
-  getTask(name, deadline){
+  getTask = (name, deadline) => {
     const body = {name, deadline}
     axios.post('/api/task', body).then((res) => {
       this.setState({
@@ -29,7 +29,7 @@ class App extends Component{
     })
   }
 
-  saveTask(id, name, deadline){
+  saveTask = (id, name, deadline) => {
     const body = {name, deadline}
 
     axios.put(`/api/task/${id}`, body).then((res) => {
@@ -39,7 +39,7 @@ class App extends Component{
     })
   }
 
-  removeTask(id){
+  removeTask = (id) => {
     axios.delete(`/api/task/${id}`).then((res) => {
       this.setState({
         currentTask: res.data
@@ -52,7 +52,12 @@ class App extends Component{
     return (
      <div className="App">
        <Header />
-       <Functional />
+       <Functional 
+       currentTask={this.state.currentTask}
+       getTask={this.getTask}
+       saveTask={this.saveTask}
+       removeTask={this.removeTask}
+      />
       
       </div>
     );
