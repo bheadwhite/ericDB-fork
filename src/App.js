@@ -1,12 +1,13 @@
-import React, {Compnent} from 'react';
+import React, {Component} from 'react';
 import './App.css';
 import axios from 'axios'
+import Header from './Components/Header'
 
 class App extends Component{
   constructor(){
     super()
     this.state = {
-
+      currentTask: []
     }
   }
   
@@ -15,7 +16,7 @@ class App extends Component{
     return (
      <div className="App">
        <Header />
-       
+
       </div>
     );
   }
