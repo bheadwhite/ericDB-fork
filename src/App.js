@@ -29,10 +29,8 @@ class App extends Component {
     });
   };
 
-  saveTask = (id, name, deadline) => {
-    const body = { name, deadline };
-
-    axios.put(`/api/task/${id}`, body).then((res) => {
+  saveTask = ({ id, name, deadline }) => {
+    axios.put(`/api/task/${id}`, { name, deadline }).then((res) => {
       this.setState({
         currentTask: res.data,
       });
