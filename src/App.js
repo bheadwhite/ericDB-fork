@@ -56,9 +56,7 @@ class App extends Component {
         {currentTask.map((e) => (
           <Functional
             key={e.id}
-            id={e.id}
-            name={e.name}
-            deadline={e.deadline}
+            task={e}
             currentTask={this.state.currentTask}
             getTask={this.getTask}
             saveTask={this.saveTask}
