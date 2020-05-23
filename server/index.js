@@ -18,4 +18,4 @@ app.delete('/api/task/:task_id', ctrl.deleteTasks)
 
 
 app.listen(SERVER_PORT, () => 
-console.log(`Listening on port ${SERVER_PORT}`))
+console.log(`Listening for your wife's tasks on port ${SERVER_PORT}`))

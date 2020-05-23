@@ -16,7 +16,7 @@ class Functional extends Component{
     render(){
         return(
             <div>
-
+                
             </div>
         )
     }
