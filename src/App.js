@@ -8,31 +8,30 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      currentTask: [],
+      currentTasks: [],
     };
   }
 
   componentDidMount() {
     axios.get("/api/task").then((res) => {
       this.setState({
-        currentTask: res.data,
+        currentTasks: res.data,
       });
     });
   }
 
-  getTask = (name, deadline) => {
-    const body = { name, deadline };
-    axios.post("/api/task", body).then((res) => {
+  newTask = ({ name, deadline }) => {
+    axios.post("/api/task", { name, deadline }).then((res) => {
       this.setState({
-        currentTask: res.data,
+        currentTasks: res.data,
       });
     });
   };
 
-  saveTask = ({ id, name, deadline }) => {
+  updateTask = ({ id, name, deadline }) => {
     axios.put(`/api/task/${id}`, { name, deadline }).then((res) => {
       this.setState({
-        currentTask: res.data,
+        currentTasks: res.data,
       });
     });
   };
@@ -40,30 +39,27 @@ class App extends Component {
   removeTask = (id) => {
     axios.delete(`/api/task/${id}`).then((res) => {
       this.setState({
-        currentTask: res.data,
+        currentTasks: res.data,
       });
     });
   };
 
   render() {
-    const { currentTask } = this.state;
+    const { currentTasks } = this.state;
 
     return (
       <div className="App">
         <Header />
-        {currentTask.map((e) => (
-          <Functional
-            key={e.id}
-            task={e}
-            currentTask={this.state.currentTask}
-            getTask={this.getTask}
-            saveTask={this.saveTask}
-            removeTask={this.removeTask}
-          />
-        ))}
+        <Functional
+          taskList={this.state.currentTasks}
+          newTask={this.newTask}
+          updateTask={this.updateTask}
+          removeTask={this.removeTask}
+        />
       </div>
     );
   }
 }
 
 export default App;
+

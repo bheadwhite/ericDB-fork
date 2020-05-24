@@ -1,70 +1,53 @@
 import React, { Component } from "react";
+import Task from "./Task";
 
 class Functional extends Component {
   constructor() {
     super();
     this.state = {
-      isEditing: false,
+      editId: null, //id of the task we're editing
       name: "",
       deadline: "",
     };
   }
 
-  toggleEdit = () => {
-    this.setState({
-      isEditing: !this.state.isEditing,
-    });
+  editTask = ({ name, deadline, id }) =>
+    this.setState({ name, deadline, editId: id });
+  deletingTask = (id) => this.props.removeTask(id);
+  newTask = () => {
+    const { newTask } = this.props;
+    const { name, deadline } = this.state;
+    newTask({ name, deadline });
+    this.resetState();
   };
-
-  handleChange() {}
-  handleSave() {}
-
-  listOfTasks = (e) => {
-    this.props.currentTask(e.target.value);
-  };
-
-  addingTask = (e) => {
-    this.props.getTask(e.target.value);
-  };
-
-  saveTask = () => {
-    const { saveTask, task } = this.props;
-    const { name, deadline, isEditing } = this.state;
-    saveTask({ id: task.id, name, deadline });
-    if (isEditing) {
+  updateTask = () => {
+    const { updateTask, task } = this.props;
+    const { name, deadline, editId: id } = this.state;
+    updateTask({ id, name, deadline });
+    if (id != null) {
       this.resetState();
     }
   };
-  editTask = () => {
-    const { name, deadline } = this.props.task;
-    this.toggleEdit();
-    this.setState({ name, deadline });
-  };
 
-  handleInput = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  resetState = () => {
-    this.setState({ isEditing: false, name: "", deadline: "" });
-  };
-
-  deletingTask = (e) => {
-    this.props.removeTask(e.target.value);
-  };
+  handleInput = (e) => this.setState({ [e.target.name]: e.target.value });
+  resetState = () => this.setState({ editId: null, name: "", deadline: "" });
 
   render() {
-    const {
-      task: { name: taskName, deadline: taskDeadline },
-    } = this.props;
-    const { isEditing, name, deadline } = this.state;
+    const { editId, name, deadline } = this.state;
+    console.log(this.props);
+
     return (
       <div>
-        {taskName + " " + "needs to be done by" + " " + taskDeadline}{" "}
-        <button onClick={this.editTask}>Wife Changed Her Mind</button>
-        <button>Job Well Done</button>
+        {this.props.taskList.map((task) => {
+          return (
+            <Task
+              key={task.id}
+              task={task}
+              editTask={this.editTask}
+              deletingTask={this.deletingTask}
+            />
+          );
+        })}
         <h4>Add New Task</h4>
         <input
           placeholder="Your wifes new demand"
@@ -78,13 +61,13 @@ class Functional extends Component {
           value={deadline}
           onChange={this.handleInput}
         />
-        {isEditing ? (
+        {editId != null ? (
           <>
-            <button onClick={this.saveTask}>update my task</button>
+            <button onClick={this.updateTask}>update my task</button>
             <button onClick={this.resetState}>cancel</button>
           </>
         ) : (
-          <button>No Going Back Now</button>
+          <button onClick={this.newTask}>No Going Back Now</button>
         )}
       </div>
     );
