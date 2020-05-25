@@ -5,7 +5,7 @@ const Task = ({ task, task: {name, deadline, id}, editTask, deletingTask,}) => {
   const edit = () => editTask(task);
 
   return (
-    <div>
+    <div className='task'>
       {`${name} needs to be done by ${deadline} `}
       <button onClick={edit}>Wife Changed Her Mind</button>
       <button onClick={deleteTask}>Job Well Done</button>

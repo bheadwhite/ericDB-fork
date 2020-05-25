@@ -13,46 +13,55 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.get("/api/task").then((res) => {
-      this.setState({
-        currentTasks: res.data,
+    axios
+      .get("/api/task")
+      .then((res) => {
+        this.setState({
+          currentTasks: res.data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    })
-    .catch((err) => {
-      console.log(err)
-    })
   }
 
   newTask = ({ name, deadline }) => {
-    axios.post("/api/task", { name, deadline }).then((res) => {
-      this.setState({
-        currentTasks: res.data,
+    axios
+      .post("/api/task", { name, deadline })
+      .then((res) => {
+        this.setState({
+          currentTasks: res.data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    }).catch((err) => {
-      console.log(err)
-    })
   };
 
   updateTask = ({ id, name, deadline }) => {
-    axios.put(`/api/task/${id}`, { name, deadline }).then((res) => {
-      this.setState({
-        currentTasks: res.data,
+    axios
+      .put(`/api/task/${id}`, { name, deadline })
+      .then((res) => {
+        this.setState({
+          currentTasks: res.data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    })
-    .catch((err) => {
-      console.log(err)
-    })
   };
 
   removeTask = (id) => {
-    axios.delete(`/api/task/${id}`).then((res) => {
-      this.setState({
-        currentTasks: res.data,
+    axios
+      .delete(`/api/task/${id}`)
+      .then((res) => {
+        this.setState({
+          currentTasks: res.data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    })
-    .catch((err) => {
-      console.log(err)
-    })
   };
 
   render() {
@@ -73,4 +82,3 @@ class App extends Component {
 }
 
 export default App;
-
