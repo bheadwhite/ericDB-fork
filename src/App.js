@@ -17,7 +17,10 @@ class App extends Component {
       this.setState({
         currentTasks: res.data,
       });
-    });
+    })
+    .catch((err) => {
+      console.log(err)
+    })
   }
 
   newTask = ({ name, deadline }) => {
@@ -25,7 +28,9 @@ class App extends Component {
       this.setState({
         currentTasks: res.data,
       });
-    });
+    }).catch((err) => {
+      console.log(err)
+    })
   };
 
   updateTask = ({ id, name, deadline }) => {
@@ -33,7 +38,10 @@ class App extends Component {
       this.setState({
         currentTasks: res.data,
       });
-    });
+    })
+    .catch((err) => {
+      console.log(err)
+    })
   };
 
   removeTask = (id) => {
@@ -41,7 +49,10 @@ class App extends Component {
       this.setState({
         currentTasks: res.data,
       });
-    });
+    })
+    .catch((err) => {
+      console.log(err)
+    })
   };
 
   render() {
