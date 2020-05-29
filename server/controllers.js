@@ -14,11 +14,15 @@ module.exports = {
   getTasks: (req, res) => {
     res.status(200).send(task)
   },
+  getTaskById: (req, res) => {
+    const clone = task.slice()
+    const updateTask = clone.find((e) => e.id === Number(req.params.task_id))
+    res.status(200).send(updateTask)
+  },
   // POST/PUT/UPDATE
   editTasks: (req, res) => {
     const { task_id } = req.params
     const { name, deadline } = req.body
-    j
     const index = task.findIndex((element) => element.id === +task_id)
     if (index === -1) {
       return res.status(404).send("Wife must not have assigned this task yet.")

@@ -1,16 +1,16 @@
 import React from "react"
-import Task from "../Components/Task"
 import axios from "axios"
+import Task from "../Components/Task"
 
 class TaskList extends React.Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
     this.state = {
       taskList: [],
-      updated: false,
     }
   }
-  getList() {
+
+  componentDidMount() {
     return axios
       .get("/api/task")
       .then((res) => {
@@ -23,15 +23,21 @@ class TaskList extends React.Component {
       })
   }
 
-  componentDidMount() {
-    this.getList()
+  removeTask = (id) => {
+    axios
+      .delete(`/api/task/${id}`)
+      .then((res) => {
+        this.setState({
+          taskList: res.data,
+        })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
-  componentDidUpdate() {
-    if (this.props.deleted && !this.state.updated) {
-      this.getList()
-      this.setState({ updated: true })
-    }
+  editTask = (task) => {
+    this.props.history.push(`/add/${task.id}`)
   }
 
   render() {
@@ -39,9 +45,9 @@ class TaskList extends React.Component {
       return (
         <Task
           key={task.id}
-          task={task}
-          editTask={this.props.editTask}
-          deletingTask={this.props.deletingTask}
+          task={task} //read (going down)
+          editTask={this.editTask} //write (sending up)
+          deletingTask={this.removeTask} //write (sending up)
         />
       )
     })
